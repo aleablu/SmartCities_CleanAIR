@@ -5,6 +5,7 @@ import BaseMap from './maps/Map'
 import PaneExample from './maps/prova'
 import History from './history/History'
 import RtGraphs from './rtgraphs/RtGraphs'
+import MapCirc from './MapCircles/MapCirc'
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
@@ -54,9 +55,9 @@ class App extends Component {
       <HashRouter>
         <div id="outer-container">
           <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"} styles={styles} >
-            <Link className="menu-item" to="/map">Mappa rilevazioni in tempo reale</Link>
-            <Link className="menu-item" to="/rtgraphs">Analisi dati in tempo reale</Link>
-            <Link className="menu-item" to="/history">Storico</Link>
+            <Link className="menu-item" to="/map">Monitoraggio stazioni real-time Aria</Link>
+            <Link className="menu-item" to="/history">Analisi dati storici Aria</Link>
+            <Link className="menu-item" to="/mapcirc">Livello inquinamento su mappa</Link>
           </Menu>
           <div id="page-wrap">
             <Route exact path="/" render={() => (
@@ -65,7 +66,7 @@ class App extends Component {
             <Route path="/map" component={BaseMap}/>
             <Route path="/rtgraphs" component={RtGraphs}/>
             <Route path="/history" component={History}/>
-            <Route path="/e" component={PaneExample}/>
+            <Route path="/mapcirc" component={MapCirc}/>
           </div>
         </div>
       </HashRouter>

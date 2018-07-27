@@ -4,7 +4,7 @@ import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:8000');
 
 function subscribeToAir(cb) {
-  socket.on('message', (msg) => {cb(msg.msg)});
+  socket.on('message', (msg) => {console.log(msg);cb(msg.msg)});
 }
 
 export { subscribeToAir }

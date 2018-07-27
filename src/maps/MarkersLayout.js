@@ -6,7 +6,7 @@ export default class MarkersLayout extends Component{
   render(){
     const layout =
       this.props.markers.map((msg,idx)=>{
-          if(this.props.focus === '#'){
+          if(this.props.focus === 'Nessuna'){
             //creo marker per tutti i messaggi che arrivano, di ogni stazione
             return(
                 <Marker key={`marker-${idx}`} position={[msg.position.lat,msg.position.lon]}>
