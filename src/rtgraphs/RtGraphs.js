@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import SimpleLineChart from './SimpleLineChart'
 import {subscribeToAir} from '../api'
-import {Grid, Header, Select} from 'semantic-ui-react'
+import {Grid, Header, Container, Segment} from 'semantic-ui-react'
 import {Map, TileLayer} from 'react-leaflet'
 import MarkersLayout from '../maps/MarkersLayout'
 import SearchPlaces from '../misc/SearchPlaces'
+import MapCirc from '../MapCircles/MapCirc'
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class RtGraphs extends Component{
   constructor(props){
@@ -13,10 +19,10 @@ export default class RtGraphs extends Component{
       focus:'#',
       data: [],
       center: [44.9132168, 8.6169507],
-      zoom: 13.00
+      zoom: 13.00,
+      datePicked: ''
     }
-    this.focusChange = this.focusChange.bind(this)
-    this.handleLocationSelected = this.handleLocationSelected.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount(){
     //avvio socket.io, la callback che gli passo viene eseguita quando riceve un messaggio dal broker
@@ -30,43 +36,35 @@ export default class RtGraphs extends Component{
         }
     });
   }
-  focusChange(e, data){
-    this.setState({focus: data.value})
-  }
-  handleLocationSelected(suggest){
-    this.setState({center: [suggest.location.lat, suggest.location.lon]});
+  handleChange(){
+    return null;
   }
   render(){
     return(
-      <Grid container centered columns={1} style={{padding: '1%'}}>
+      <Grid container centered columns='equal' style={{padding: '1%'}}>
         <Grid.Row>
-          <Header as="h2">Analisi Real Time dei dati</Header>
+          <Header as="h2">Analisi dati storici aria</Header>
 
         </Grid.Row>
         <Grid.Row>
-          <SearchPlaces handleLocationSelected={this.handleLocationSelected}/>
-          <Select placeholder='Tutte le stazioni'
-                  options={[{key:'1', value:'Stazione1', text:'Autobus1'},
-                            {key:'2', value:'Stazione2', text:'Autobus2'},
-                            {key:'3', value:'Stazione3', text:'Autobus3'},
-                            {key:'4', value:'Stazione4', text:'Autobus4'},
-                            {key:'5', value:'Stazione5', text:'Autobus5'},
-                            {key:'6', value:'#', text:'Tutte le stazioni'}]}
-                  onChange={this.focusChange}
-          />
+          <Container>
+            Qua puoi visualizzare i livelli di inquinanti sulla mappa considerando le segnalazioni solamente da una certa data in poi!
+          </Container>
         </Grid.Row>
         <Grid.Row>
+          <Grid.Column>
+          <Segment>
             <SimpleLineChart focus={this.state.focus} data={this.state.data}/>
+          </Segment>
+          </Grid.Column>
+          <Grid.Column>
+          <Segment>
+            Seleziona una data:<DatePicker selected={this.state.datePicked} onChange={this.handleChange} style={{marginLeft: '50px'}}/>
+            </Segment>
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row style={{height: '400px'}}>
-
-            <Map center={this.state.center} zoom={this.state.zoom} style={{width: '100%', height: '100%', position:'absolute'}}>
-              <TileLayer
-                attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <MarkersLayout focus={this.state.focus} markers={this.state.data}/>
-            </Map>
+            <MapCirc/>
         </Grid.Row>
       </Grid>
     )

@@ -56,7 +56,7 @@ class App extends Component {
         <div id="outer-container">
           <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"} styles={styles} >
             <Link className="menu-item" to="/map">Monitoraggio stazioni real-time Aria</Link>
-            <Link className="menu-item" to="/history">Analisi dati storici Aria</Link>
+            <Link className="menu-item" to="/rtgraphs">Analisi dati storici Aria</Link>
             <Link className="menu-item" to="/mapcirc">Livello inquinamento su mappa</Link>
           </Menu>
           <div id="page-wrap">
